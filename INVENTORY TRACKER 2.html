@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Inventory Tracker</title>
+</head>
+<body>
+	<header>
+		<h1>Inventory Tracker</h1>
+	</header>
+
+	<main>
+		<section>
+			<h2>Add Item</h2>
+			<form>
+				<label for="item-name">Item Name:</label>
+				<input type="text" id="item-name" name="item-name" required><br><br>
+
+				<label for="description">Description:</label>
+				<input type="text" id="description" name="description" required><br><br>
+
+				<label for="quantity">Quantity:</label>
+				<input type="number" id="quantity" name="quantity" min="1" required><br><br>
+
+				<label for="price">Price:</label>
+				<input type="number" id="price" name="price" step="0.01" min="0" required><br><br>
+
+				<label for="location">Location:</label>
+				<input type="text" id="location" name="location" required><br><br>
+
+				<label for="image">Image:</label>
+				<input type="file" id="image" name="image"><br><br>
+
+				<button type="button" onclick="addItem()">Add Item</button>
+			</form>
+		</section>
+
+		<section>
+			<h2>Search Inventory</h2>
+			<input type="text" id="search" name="search" placeholder="Search by Item Name" onkeyup="filterItems()"><br><br>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Item Name</th>
+						<th>Description</th>
+						<th>Quantity</th>
+						<th>Price</th>
+						<th>Location</th>
+						<th>Image</th>
+					</tr>
+				</thead>
+				<tbody id="inventory-table">
+				</tbody>
+			</table>
+		</section>
+	</main>
+
+	<script>
+        
+		let inventory = [];
+
+		function addItem() {
+			let itemName = document.getElementById("item-name").value;
+			let description = document.getElementById("description").value;
+			let quantity = parseInt(document.getElementById("quantity").value);
+			let price = parseFloat(document.getElementById("price").value);
+			let location = document.getElementById("location").value;
+			let image = document.getElementById("image").value;
+
+			let item = {itemName: itemName, description: description, quantity: quantity, price: price, location: location, image: image};
+
+			inventory.push(item);
+
+			displayInventory();
+		}
+
+		function displayInventory() {
+			let table = document.getElementById("inventory-table");
+
+			// Clear table
+			while (table.firstChild) {
+				table.removeChild(table.firstChild);
+			}
+
+			// Add rows to table
+			for (let i = 0; i < inventory.length; i++) {
+				let row = table.insertRow(i);
+				let cell1 = row.insertCell(0);
+				let cell2 = row.insertCell(1);
+				let cell3 = row.insertCell(2);
+				let cell4 = row.insertCell(3);
+				let cell5 = row.insertCell(4);
+				let cell6 = row.insertCell(5);
+
+				cell1.innerHTML = inventory[i].itemName;
+				cell2.innerHTML = inventory[i].description;
+            }
+        }
